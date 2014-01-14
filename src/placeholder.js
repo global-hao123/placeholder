@@ -27,6 +27,8 @@ $ && function(WIN, DOC, undef) {
                 // var offset = (rendered ? wrap : $el).offset()
                 //     , pos = $el.position();
 
+                // console.log($el.outerWidth(), $el.innerWidth())
+
                 // auto style
                 holder.css($.extend({
                     'position': 'absolute'
@@ -38,7 +40,8 @@ $ && function(WIN, DOC, undef) {
                     , 'margin': $el.css('margin')
                     , 'pointer-events': 'none'
                     , 'color': '#999'
-                    , 'width': $el.width()
+                    // , 'width': $el.width()
+                    , 'width': $el.innerWidth()
                     // , 'background': '#eee'
                     , 'padding-top': ($el.outerHeight() - $el.height())/2 + 'px'
                     , 'padding-left': ($el.outerWidth() - $el.width())/2 + 'px'
