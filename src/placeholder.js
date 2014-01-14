@@ -1,61 +1,93 @@
+
 var $ = window.jQuery || window.require && require("common:widget/ui/jquery/jquery.js");
 
 $ && function(WIN, DOC, undef) {
     var shim = $('<span>');
-    $.fn.placeholder = function($el, args) {
-        var shim = $('<span>');
+    $.fn.placeholder = function(text, args) {
 
-        return function(args) {
-            var $el = this
-                , wrap = shim.clone(!1)
-                , holder = shim.clone(!1)
-                , pos = $el.position();
+        args = $.extend({
+            hideOnFocus: false
+            , customClass: ""
+            , customCss: {}
+        }, args);
 
-            $el.data("__ph__", $el.attr("placeholder"));
-            $el.attr("placeholder", "");
+        var $el = this
+            , wrap = shim.clone(!1)
+            , holder = shim.clone(!1)
 
-            holder.html($el.data("__ph__"));
+            , toggle = function() {
+                $el.val() ? holder.hide() : holder.show();
+            }
+            
+            , reset = function(str, _args) {
 
-            holder.css({
-                'position': 'absolute'
-                , 'top': pos.top
-                , 'left': pos.left
-                , 'text-indent': '3px'
-                , 'pointer-events': 'none'
-                , 'color': '#999'
-                , 'background': '#eee'
-                , 'line-height': $el.css('line-height')
-            });
+                text = str || text;
+                _args = $.extend(!0, args, _args);
 
-            $el.wrap(wrap.css({
-                'display': 'inline-block'
-                , 'position': 'relative'
-                , 'z-index': '10'
-            }));
+                // var offset = (rendered ? wrap : $el).offset()
+                //     , pos = $el.position();
 
-            (wrap = $el.parent()).append(holder);
+                // auto style
+                holder.css($.extend({
+                    'position': 'absolute'
+                    , 'overflow': 'hidden'
+                    // , 'top': offset.top - pos.top
+                    // , 'left': offset.left - pos.left
+                    , 'top': 0
+                    , 'left': 0
+                    , 'margin': $el.css('margin')
+                    , 'pointer-events': 'none'
+                    , 'color': '#999'
+                    , 'width': $el.width()
+                    // , 'background': '#eee'
+                    , 'padding-top': ($el.outerHeight() - $el.height())/2 + 'px'
+                    , 'padding-left': ($el.outerWidth() - $el.width())/2 + 'px'
+                    , 'line-height': $el.css('line-height')
+                    , 'display': 'none'
+                }, _args.customCss));
 
-            // console.log(this)
+                _args.customClass && holder.addClass(_args.customClass);
+
+                wrap.css({
+                    'display': 'inline-block'
+                    , 'position': 'relative'
+                    , 'z-index': ~~$el.css("z-index") + 1
+                });
+
+                holder.html(text);
+
+                toggle();
+            }
+            , get = function() {
+                return text;
+            };
+            // , rendered = 0;
+
+        // cache native attr
+        text = text || $el.attr("placeholder");
+        $el.attr("placeholder", "");
+        $el.wrap(wrap);
+        (wrap = $el.parent()).append(holder);
+        reset();
+        rendered = 1;
+
+        args.hideOnFocus
+        ? $el
+            .focus(function() {
+                holder.hide();
+            })
+            .blur(function() {
+                toggle();
+            })
+        : $el.on("input propertychange", function(e) {
+            toggle();
+        });
+        holder.click(function() {
+            $el.focus();
+        });
+        return {
+            reset: reset
+            , get: get
         }
-    }();
-
-    /*_.set = function() {
-        
     }
-
-    fn.init = function() {
-        var that = this
-            , wrap = that.holder.clone(!1)
-            , shim = that.holder.clone(!1);
-
-            console.log(that.$el[0])
-
-        shim.html("xxx");
-
-        wrap.css({"position": "relative"})
-            .append(that.$el)
-            .append(shim);
-
-        that.$parent.append(wrap);
-    }*/
 }(window, document);
