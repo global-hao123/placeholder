@@ -29,6 +29,9 @@ $ && function(WIN, DOC, undef) {
 
                 // console.log($el.outerWidth(), $el.innerWidth())
 
+                var paddingTop = ($el.outerHeight() - $el.height())/2 + 'px'
+                    , paddingLeft = ($el.outerWidth() - $el.width())/2 + 'px';
+
                 // auto style
                 holder.css($.extend({
                     'position': 'absolute'
@@ -37,16 +40,18 @@ $ && function(WIN, DOC, undef) {
                     // , 'left': offset.left - pos.left
                     , 'top': 0
                     , 'left': 0
-                    , 'margin': $el.css('margin')
+
+                    // $el.css('margin') not working in firefox
+                    , 'margin': [$el.css('margin-top'), $el.css('margin-right'), $el.css('margin-bottom'), $el.css('margin-left')].join(' ')
+                    , 'padding': [paddingTop, paddingLeft, paddingTop, paddingLeft].join(' ')
                     , 'pointer-events': 'none'
                     , 'color': '#999'
                     // , 'width': $el.width()
-                    , 'width': $el.innerWidth()
-                    // , 'background': '#eee'
-                    , 'padding-top': ($el.outerHeight() - $el.height())/2 + 'px'
-                    , 'padding-left': ($el.outerWidth() - $el.width())/2 + 'px'
+                    , 'width': $el.width()
+                    , 'height': $el.height()
                     , 'line-height': $el.css('line-height')
                     , 'display': 'none'
+                    , 'cursor': 'text'
                 }, _args.customCss));
 
                 _args.customClass && holder.addClass(_args.customClass);
