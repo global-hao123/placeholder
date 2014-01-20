@@ -59,8 +59,10 @@ $ && function(WIN, DOC, undef) {
                     'display': 'inline-block'
                     , 'position': 'relative'
                     , 'z-index': ~~$el.css("z-index") + 1
-                    , 'width': $el.css('width')
-                    , 'height': $el.css('height')
+                    // , 'width': $el.css('width')
+                    , 'width': '100%'
+                    // , 'height': $el.css('height')
+                    , 'height': '100%'
                     , 'vertical-align': 'top'
                 });
 
