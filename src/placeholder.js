@@ -37,8 +37,8 @@ $ && function(WIN, DOC, undef) {
                     , 'overflow': 'hidden'
                     // , 'top': offset.top - pos.top
                     // , 'left': offset.left - pos.left
-                    , 'top': $el.css('top')
-                    , 'left': $el.css('left')
+                    , 'top': +$el.css('top') || 0
+                    , 'left': +$el.css('left') || 0
 
                     // $el.css('margin') not working in firefox
                     , 'margin': [$el.css('margin-top'), $el.css('margin-right'), $el.css('margin-bottom'), $el.css('margin-left')].join(' ')
