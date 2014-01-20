@@ -1,4 +1,3 @@
-
 var $ = window.jQuery || window.require && require("common:widget/ui/jquery/jquery.js");
 
 $ && function(WIN, DOC, undef) {
@@ -38,8 +37,8 @@ $ && function(WIN, DOC, undef) {
                     , 'overflow': 'hidden'
                     // , 'top': offset.top - pos.top
                     // , 'left': offset.left - pos.left
-                    , 'top': 0
-                    , 'left': 0
+                    , 'top': $el.css('top')
+                    , 'left': $el.css('left')
 
                     // $el.css('margin') not working in firefox
                     , 'margin': [$el.css('margin-top'), $el.css('margin-right'), $el.css('margin-bottom'), $el.css('margin-left')].join(' ')
@@ -60,6 +59,8 @@ $ && function(WIN, DOC, undef) {
                     'display': 'inline-block'
                     , 'position': 'relative'
                     , 'z-index': ~~$el.css("z-index") + 1
+                    , 'width': $el.css('width')
+                    , 'height': $el.css('height')
                 });
 
                 holder.html(text);
