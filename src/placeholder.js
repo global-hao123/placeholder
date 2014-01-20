@@ -61,6 +61,7 @@ $ && function(WIN, DOC, undef) {
                     , 'z-index': ~~$el.css("z-index") + 1
                     , 'width': $el.css('width')
                     , 'height': $el.css('height')
+                    , 'vertical-align': 'top'
                 });
 
                 holder.html(text);
